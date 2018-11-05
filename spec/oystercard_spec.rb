@@ -24,5 +24,19 @@ describe Oystercard do
     end
   end
 
+  describe '#touch_in' do
+    it 'changes in_use status to true when using touch_in' do
+      subject.touch_in
+      expect(subject).to be_in_journey
+    end
+  end
+
+  describe '#touch_out' do
+    it 'changes in_use status to false when using touch_out' do
+      subject.touch_in
+      subject.touch_out
+      expect(subject).to_not be_in_journey
+    end
+  end
 
 end

@@ -1,12 +1,15 @@
+# A class of cards to be used on a transport system
+
 class Oystercard
 
-  attr_reader :balance
+  attr_reader :balance, :in_journey
 
   DEFAULT_BALANCE = 0
   CARD_LIMIT = 90
 
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
+    @in_use = false
   end
 
   def top_up(amount)
@@ -16,6 +19,18 @@ class Oystercard
 
   def deduct(amount)
     @balance -= amount
+  end
+
+  def in_journey?
+    @in_use == true
+  end
+
+  def touch_in
+    @in_use = true
+  end
+
+  def touch_out
+    @in_use = false
   end
 
   private
