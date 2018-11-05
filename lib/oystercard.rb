@@ -6,7 +6,7 @@ class Oystercard
 
   DEFAULT_BALANCE = 0
   CARD_LIMIT = 90
-  MINIMUM_BALANCE = 1
+  MINIMUM_FARE = 1
 
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
@@ -18,31 +18,32 @@ class Oystercard
     @balance += amount
   end
 
-  def deduct(amount)
-    @balance -= amount
-  end
-
   def in_journey?
     @in_use == true
   end
 
   def touch_in
-    fail "Balance below £#{MINIMUM_BALANCE}, top-up required" if below_minimum?
+    fail "Balance below £#{MINIMUM_FARE}, top-up required" if below_minimum?
     @in_use = true
   end
 
   def touch_out
+    deduct(MINIMUM_FARE)
     @in_use = false
   end
 
   private
+
+  def deduct(amount)
+    @balance -= amount
+  end
 
   def exceeds_limit?(amount)
     (@balance + amount) > CARD_LIMIT
   end
 
   def below_minimum?
-    @balance < MINIMUM_BALANCE
+    @balance < MINIMUM_FARE
   end
 
 end

@@ -2,7 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
 
-  let(:minimum) { Oystercard::MINIMUM_BALANCE }
+  let(:minimum) { Oystercard::MINIMUM_FARE }
 
   it 'has a balance which defaults to zero' do
       expect(subject.balance).to eq 0
@@ -16,13 +16,6 @@ describe Oystercard do
       card_limit = Oystercard::CARD_LIMIT
       subject.top_up(card_limit)
       expect { subject.top_up(1) }.to raise_error "Cannot exceed maximum of £#{card_limit}"
-    end
-  end
-
-  describe 'deduct' do
-    it 'allows deductions from the balance' do
-      subject.top_up(10)
-      expect { subject.deduct(1) }.to change{ subject.balance }.by -1
     end
   end
 
@@ -43,6 +36,11 @@ describe Oystercard do
       subject.touch_in
       subject.touch_out
       expect(subject).to_not be_in_journey
+    end
+    it 'charges a fare for a journey' do
+      subject.top_up(minimum)
+      subject.touch_in
+      expect { subject.touch_out }.to change{ subject.balance}.by (-minimum)
     end
   end
 
