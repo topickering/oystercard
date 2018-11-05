@@ -6,6 +6,7 @@ class Oystercard
 
   DEFAULT_BALANCE = 0
   CARD_LIMIT = 90
+  MINIMUM_BALANCE = 1
 
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
@@ -26,6 +27,7 @@ class Oystercard
   end
 
   def touch_in
+    fail "Balance below £#{MINIMUM_BALANCE}, top-up required" if below_minimum?
     @in_use = true
   end
 
@@ -37,6 +39,10 @@ class Oystercard
 
   def exceeds_limit?(amount)
     (@balance + amount) > CARD_LIMIT
+  end
+
+  def below_minimum?
+    @balance < MINIMUM_BALANCE
   end
 
 end
