@@ -17,5 +17,12 @@ describe Oystercard do
     end
   end
 
+  describe 'deduct' do
+    it 'allows deductions from the balance' do
+      subject.top_up(10)
+      expect { subject.deduct(1) }.to change{ subject.balance }.by -1
+    end
+  end
+
 
 end
