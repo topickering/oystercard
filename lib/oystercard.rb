@@ -1,4 +1,4 @@
-# A class of cards to be used on a transport system
+require_relative 'station'
 
 class Oystercard
 
