@@ -32,26 +32,9 @@ describe Oystercard do
       subject.touch_in(station)
       expect(subject).to be_in_journey
     end
-    it 'records the entry station on the card' do
-      subject.top_up(minimum)
-      subject.touch_in(station)
-      expect(subject.current_journey[:entry_station]).to eq station
-    end
   end
 
   describe '#touch_out' do
-    it 'records the exit station when touching out' do
-      subject.top_up(minimum)
-      subject.touch_in(station)
-      subject.touch_out(station)
-      expect(subject.journeys[0][:exit_station]).to eq station
-    end
-    it 'changes entry_station status to nil when using touch_out' do
-      subject.top_up(minimum)
-      subject.touch_in(station)
-      subject.touch_out(station)
-      expect(subject).to_not be_in_journey
-    end
     it 'charges a fare for a journey' do
       subject.top_up(minimum)
       subject.touch_in(station)
